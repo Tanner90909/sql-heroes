@@ -23,7 +23,7 @@ def create_new_pirate():
     else:
         print("Invalid response. Can't be king of the pirates if you don't set sail!")
 
-# create_new_pirate()
+create_new_pirate()
 
 # READ
 
@@ -64,7 +64,85 @@ def update_pirate_bio():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-update_pirate_bio()
+# update_pirate_bio()
+
+def add_crew_mate():
+    prompt = input("Would you like to add a crew mate? Y or N: ")
+    user_name = input("What is your name?: ")
+    if prompt == "Y":
+            query = """
+            SELECT * from pirates
+                    """
+            returned_items = execute_query(query)
+            for item in returned_items:
+                print(item[0], item[1])
+    elif prompt == "N":
+        pass
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+    prompt2 = input("Do you see your crew mate? Y or N: ")
+    if prompt2 == "Y":
+        pick_crew_mate = input("What is their number?: ")
+        query = """
+            INSERT INTO relationships(pirate1_id, pirate2_id, relationship_type_id)
+            VALUES (%s, %s, %s)
+                """
+        pirate1_id_query = f"""
+            SELECT id FROM pirates
+            WHERE name = '{user_name}'
+            """
+        pirate1_id_vairable = execute_query(pirate1_id_query)
+        pirate1_id = pirate1_id_vairable[0]
+        pirate2_id = pick_crew_mate
+        relationship_type_id = 1
+        params = (pirate1_id, pirate2_id, relationship_type_id)
+        execute_modify(query, params)
+        print("You successfully added a member to your pirate crew!")
+    elif prompt2 == "N":
+        print("They must not have created a pirate profile yet. Check back soon!")
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+
+# add_crew_mate()
+
+def add_enemy():
+    prompt = input("Would you like to add an enemy? Y or N: ")
+    user_name = input("What is your name?: ")
+    if prompt == "Y":
+            query = """
+            SELECT * from pirates
+                    """
+            returned_items = execute_query(query)
+            for item in returned_items:
+                print(item[0], item[1])
+    elif prompt == "N":
+        pass
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+    prompt2 = input("Do you see your enemy? Y or N: ")
+    if prompt2 == "Y":
+        pick_crew_mate = input("What is their number?: ")
+        query = """
+            INSERT INTO relationships(pirate1_id, pirate2_id, relationship_type_id)
+            VALUES (%s, %s, %s)
+                """
+        pirate1_id_query = f"""
+            SELECT id FROM pirates
+            WHERE name = '{user_name}'
+            """
+        pirate1_id_vairable = execute_query(pirate1_id_query)
+        pirate1_id = pirate1_id_vairable[0]
+        pirate2_id = pick_crew_mate
+        relationship_type_id = 2
+        params = (pirate1_id, pirate2_id, relationship_type_id)
+        execute_modify(query, params)
+        print("You successfully added an enemy to vanquish!")
+    elif prompt2 == "N":
+        print("They must not have created a pirate profile yet. Check back soon!")
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+
+add_enemy()
 
 # DELETE
 
@@ -76,7 +154,7 @@ def delete_pirate():
             DELETE FROM pirates
             WHERE name = %s;
                 """
-        params = (pirate_to_delete)
+        params = (pirate_to_delete,)
         execute_modify(query, params)
         print(f"Pirate '{pirate_to_delete}' deleted successfully")
     elif prompt == "N":
