@@ -42,7 +42,7 @@ def view_all_pirates():
     else:
         print("Invalid input. You can't set sail for the Grand Line without knowing what... or WHO lies ahead! Please select Y or N")
 
-# view_all_pirates()
+view_all_pirates()
 
 # UPDATE
 
@@ -64,7 +64,7 @@ def update_pirate_bio():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-# update_pirate_bio()
+update_pirate_bio()
 
 def add_crew_mate():
     prompt = input("Would you like to add a crew mate? Y or N: ")
@@ -103,7 +103,7 @@ def add_crew_mate():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-# add_crew_mate()
+add_crew_mate()
 
 def add_enemy():
     prompt = input("Would you like to add an enemy? Y or N: ")
@@ -162,6 +162,5 @@ def delete_pirate():
     else:
         print("Invalid input. Please try again and select Y or N")
 
-
-# delete_pirate()
+delete_pirate()
 
