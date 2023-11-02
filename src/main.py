@@ -42,35 +42,48 @@ def view_all_pirates():
     else:
         print("Invalid input. You can't set sail for the Grand Line without knowing what... or WHO lies ahead! Please select Y or N")
 
-view_all_pirates()
+# view_all_pirates()
 
 # UPDATE
 
-def update_pirate_bio(pirate_name, new_biography):
-    query = """
-        UPDATE pirates
-        SET biography = %s
-        WHERE name = %s;
-            """
-    params = (new_biography, pirate_name)
-    execute_modify(query, params)
-    print(f"Pirate '{pirate_name}' bio has been updated")
+def update_pirate_bio():
+    prompt = input("Would you like to update your biography? Y or N: ")
+    if prompt == "Y":
+        pirate_to_update = input("Enter pirate name to update their biography: ")
+        biography_to_update = input("Enter your new biography: ")
+        query = """
+            UPDATE pirates
+            SET biography = %s
+            WHERE name = %s;
+                """
+        params = (biography_to_update, pirate_to_update)
+        execute_modify(query, params)
+        print(f"Pirate '{pirate_to_update}' bio has been updated")
+    elif prompt == "N":
+        print("That's okay, I think what you have now will work!")
+    else:
+        print("Invalid input. Please try again and select Y or N.")
 
-# pirate_to_update = input("Enter pirate name to update their biography: ")
-# biography_to_update = input("Enter your new biography: ")
-# update_pirate_bio(pirate_to_update, biography_to_update)
+update_pirate_bio()
 
 # DELETE
 
-def delete_pirate(pirate_name):
-    query = """
-        DELETE FROM pirates
-        WHERE name = %s;
-            """
-    params = (pirate_name,)
-    execute_modify(query, params)
-    print(f"Pirate '{pirate_name}' deleted successfully")
+def delete_pirate():
+    prompt = input("Do you want to delete any pirates from the seas? Y or N: ")
+    if prompt == "Y":
+        pirate_to_delete = input("Enter pirate name to be deleted: ")
+        query = """
+            DELETE FROM pirates
+            WHERE name = %s;
+                """
+        params = (pirate_to_delete)
+        execute_modify(query, params)
+        print(f"Pirate '{pirate_to_delete}' deleted successfully")
+    elif prompt == "N":
+        print("The other pirates can exist... for now.")
+    else:
+        print("Invalid input. Please try again and select Y or N")
 
-# pirate_to_delete = input("Enter pirate name to be deleted: ")
-# delete_pirate(pirate_to_delete)
+
+# delete_pirate()
 
