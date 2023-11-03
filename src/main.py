@@ -3,7 +3,7 @@ from database.db_connection import execute_query, execute_modify
 # CREATE
 
 def create_new_pirate():
-    prompt = input("Welcome to the Grand Line! Would you like to make a pirate profile? Y or N: ")
+    prompt = input("Would you like to make a pirate profile? Y or N: ")
     if prompt == "Y":
         pirate_name = input("Enter pirates name: ")
         pirate_about_me = input("Enter pirates about me: ")
@@ -23,7 +23,6 @@ def create_new_pirate():
     else:
         print("Invalid response. Can't be king of the pirates if you don't set sail!")
 
-create_new_pirate()
 
 # READ
 
@@ -42,7 +41,6 @@ def view_all_pirates():
     else:
         print("Invalid input. You can't set sail for the Grand Line without knowing what... or WHO lies ahead! Please select Y or N")
 
-view_all_pirates()
 
 # UPDATE
 
@@ -64,7 +62,76 @@ def update_pirate_bio():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-update_pirate_bio()
+
+def add_new_ability():
+    prompt = input("Would you like to add a new ability? Y or N: ")
+    if prompt == "Y":
+        ability_name_question = input("What is your name?: ")
+        ability_question = input("What ability do you have?: ")
+        query1 = f"""
+        INSERT INTO
+            ability_types (name)
+        VALUES
+            ('{ability_question}');
+            """
+        query2 = f"""
+        SELECT id FROM pirates
+        WHERE name = '{ability_name_question}';
+                """
+        query3 = f"""
+        SELECT id FROM ability_types
+        WHERE name = '{ability_question}';
+        """
+        query4 = """
+        INSERT INTO 
+            abilities (pirate_id, ability_type_id)
+        VALUES
+            (%s, %s);
+            """
+        execute_modify(query1)
+        pirate_id_to_add_ability_unformatted = execute_query(query2)
+        ability_id_to_add_unformatted = execute_query(query3)
+        pirate_id_to_add_ability = pirate_id_to_add_ability_unformatted[0]
+        ability_id_to_add = ability_id_to_add_unformatted[0]
+        params = (pirate_id_to_add_ability, ability_id_to_add)
+        execute_modify(query4, params)
+        print(f"You successfully added {ability_question} to your abilities!")
+    elif prompt == "N":
+        print("You're probably strong enough. I've heard you might have eaten a Devil Fruit ;)")
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+
+
+def view_pirate_abilities():
+    prompt = input("Would you like to view a pirates abilities? Y or N: ")
+    if prompt == "Y":
+        pirate_name_to_view = input("Whose abilities would you like to see?: ")
+        query1 = f"""
+        SELECT id FROM pirates
+        WHERE name = '{pirate_name_to_view}'
+                """
+        pirate_id_to_view_unformatted = execute_query(query1)
+        pirate_id_to_view = pirate_id_to_view_unformatted[0]
+        pirate_id_to_view_correct = pirate_id_to_view[0]
+        query2 = f"""
+        SELECT ability_type_id FROM abilities
+        WHERE pirate_id = '{pirate_id_to_view_correct}'
+        """
+        ability_type_id_to_view_unformatted = execute_query(query2)
+        ability_type_id_to_view1 = ability_type_id_to_view_unformatted[0]
+        ability_type_id_to_view_correct1 = ability_type_id_to_view1[0]
+        query3 = f"""
+        SELECT name FROM ability_types
+        WHERE id = '{ability_type_id_to_view_correct1}'
+                """
+        abilities_to_view = execute_query(query3)
+        print(f"'{pirate_name_to_view} has the following abilities: '{abilities_to_view}'")
+    elif prompt == "N":
+        print("You're so strong you don't need to know what you're up against to win.")
+    else:
+        print("Invalid input. Please try again and select Y or N.")
+
+
 
 def add_crew_mate():
     prompt = input("Would you like to add a crew mate? Y or N: ")
@@ -103,7 +170,7 @@ def add_crew_mate():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-add_crew_mate()
+
 
 def add_enemy():
     prompt = input("Would you like to add an enemy? Y or N: ")
@@ -142,7 +209,7 @@ def add_enemy():
     else:
         print("Invalid input. Please try again and select Y or N.")
 
-add_enemy()
+
 
 # DELETE
 
@@ -162,5 +229,68 @@ def delete_pirate():
     else:
         print("Invalid input. Please try again and select Y or N")
 
-delete_pirate()
 
+
+
+
+intro = input("Welcome to the Grand Line matey! Have you heard about our pirate database? Y or N: ")
+if intro == "Y":
+    print("Awesome! What would you like to do?")
+    question = input("""1 Create a new pirate profile
+2 View all the pirates on the seas
+3 Update my biography
+4 Add a crewmate
+5 Add an enemy
+6 Add an ability
+7 View a pirates abilities
+8 Delete pirate from the seas
+""")
+    if question == "1":
+        create_new_pirate()
+    elif question == "2":
+        view_all_pirates()
+    elif question == "3":
+        update_pirate_bio()
+    elif question == "4":
+        add_crew_mate()
+    elif question == "5":
+        add_enemy()
+    elif question == "6":
+        add_new_ability()
+    elif question == "7":
+        view_pirate_abilities()
+    elif question == "8":
+        delete_pirate()
+    else:
+        print("Invalid input. Please try again and select a number 1-8")
+elif intro == "N":
+    question2 = input("""Well, let me tell ya bout it! This is the Grand Line Network! Where all pirates can make profiles, connect with other users, and share their abilities! What would you like to do?
+1 Create a new pirate profile
+2 View all the pirates on the seas
+3 Update my biography
+4 Add a crewmate
+5 Add an enemy
+6 Add an ability
+7 View a pirates abilities
+8 Delete pirate from the seas                      
+: """)
+    if question2 == "1":
+        create_new_pirate()
+    elif question2 == "2":
+        view_all_pirates()
+    elif question2 == "3":
+        update_pirate_bio()
+    elif question2 == "4":
+        add_crew_mate()
+    elif question2 == "5":
+        add_enemy()
+    elif question2 == "6":
+        add_new_ability()
+    elif question2 == "7":
+        view_pirate_abilities()
+    elif question2 == "8":
+        delete_pirate()
+    else:
+        print("Invalid input. Please try again and select a number 1-8")
+else:
+    print("Invalid input. Please try again and select Y or N")
