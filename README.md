@@ -1,9 +1,11 @@
-# **SQL HEROES TEMPLATE** 
+# SQL Pirates
 
-## Setup
-- After creating your own repo from the template, create a local copy either with the Github CLI tool (recommended) or a git clone.
-- Make sure you have Docker Desktop downloaded and running
-- Open VScode and install the [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-- Open your repo in VScode, after a few moments you should see a prompt from VScode asking if you want to reopen the repo in a dev container, follow the prompt to do so. If you are not prompted, you can click the remote connection icon in the bottom left corner and select 'Reopen in Container'
-- Once the container is built, click the SQL tools extension to establish your database connection. All required fields, including password, are 'postgres'.
-- Proceed to set up your file structure per Project document.
+Python and SQL
+
+This was a really fun project for me to build. This was one of my earlier projects in the backend section of Awesome Inc's bootcamp. I really enjoyed learning python. As a language, it just made a lot more sense to me to use indentation for blocks of code rather than braces.
+
+Learning how databases worked was also a really eye-opening experience for me. Being able to achieve CRUD functionality with the pirates in my database was a very big challenge, but I really enjoyed making this project.
+
+Also, if you like One Piece the anime this is definitely worth a look!
+
+Please take a look and let me know if you have any advice/questions!
